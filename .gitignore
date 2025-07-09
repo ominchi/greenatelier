@@ -1,0 +1,4 @@
+node_modules/ 
+build/ 
+git add public/images/logo.png
+git commit -m "Add logo image"

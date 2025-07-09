@@ -1,0 +1,939 @@
+/* 全体のスタイル */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* 横スクロールを禁止 */
+  background-color: #f4e9d8;
+  background-image: linear-gradient(
+  45deg,
+  #5c4033 25%,
+  #d4a373 25%,
+  #d4a373 50%,
+  #5c4033 50%,
+  #5c4033 75%,
+  #d4a373 75%
+  );
+  background-size: 60px 60px;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  -webkit-overflow-scrolling: touch; /* iOSのスムーズなスクロール */
+  touch-action: pan-y; /* 縦スクロールのみ許可 */
+ }
+ 
+ .app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 100%; /* ビューポート全体に */
+  max-width: 900px;
+  margin: 0 auto; /* 中央配置 */
+  border: 2px solid #5c4033;
+  min-height: 100vh; /* 画面全体を埋める */
+  box-sizing: border-box;
+  overflow-y: auto; /* 縦スクロールを許可 */
+  overflow-x: hidden; /* 横スクロールを禁止 */
+ }
+ 
+ h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #355e3b;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+ }
+ 
+ @media (max-width: 600px) {
+  .app-container {
+  padding: 10px;
+  border-radius: 0; /* スマホでは角をなくす */
+  }
+  h1 {
+  font-size: 26px;
+  }
+ }
+ 
+ /* メニューボタン */
+ .menu-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 8px 12px;
+  font-size: 24px;
+  background-color: #5c4033;
+  color: #fff;
+  border: 2px solid #5c4033;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 1000;
+ }
+ 
+ .menu-button:hover {
+  background-color: #355e3b;
+  transform: translateY(-2px);
+ }
+ 
+ .menu-button:active {
+  transform: translateY(1px);
+ }
+ 
+ /* メニュー */
+ .menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  justify-content: flex-end;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+ }
+ 
+ .menu-overlay.open {
+  transform: translateX(0);
+ }
+ 
+ .menu {
+  background-color: #f4e9d8;
+  border-left: 3px solid #5c4033;
+  width: 250px;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
+ }
+ 
+ .menu h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 24px;
+  color: #355e3b;
+  margin-bottom: 20px;
+ }
+ 
+ .menu-item {
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: left;
+  font-size: 16px;
+ }
+ 
+ .menu-close-button {
+  align-self: flex-end;
+  padding: 8px 12px;
+  font-size: 18px;
+  background-color: #5c4033;
+  color: #fff;
+  border: 2px solid #5c4033;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, transform 0.2s;
+ }
+ 
+ .menu-close-button:hover {
+  background-color: #355e3b;
+  transform: translateY(-2px);
+ }
+ 
+ .menu-close-button:active {
+  transform: translateY(1px);
+ }
+ 
+ /* スライドショー */
+ .slideshow-container {
+  position: relative;
+  width: 100%; /* ビューポート内に収める */
+  max-width: 100%;
+  height: 100vh;
+  overflow: hidden;
+ }
+ 
+ .slideshow {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+ 
+ .slideshow-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+  transition: opacity 1s ease-in-out;
+  z-index: 1;
+ }
+ 
+ .slideshow-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 2;
+ }
+ 
+ .slideshow-title {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Cinzel', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: #355e3b;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border: 2px solid #d4a373;
+  background: rgba(244, 233, 216, 0.8);
+  padding: 10px 20px;
+  border-radius: 5px;
+  max-width: 90vw;
+  white-space: nowrap;
+  z-index: 3;
+ }
+ 
+ .slideshow-subtitle {
+  position: absolute;
+  top: 34%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  font-size: 24px;
+  color: #ffffff;
+  -webkit-text-stroke: 1px #5c4033;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background: rgba(244, 233, 216, 0.6);
+  padding: 5px 15px;
+  border-radius: 5px;
+  max-width: 90vw;
+  white-space: nowrap;
+  z-index: 3;
+ }
+ 
+ .start-button {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px 28px;
+  font-size: 20px;
+  background-color: #5c4033;
+  background-image: linear-gradient(
+  rgba(255, 255, 255, 0.1),
+  rgba(0, 0, 0, 0.2)
+  );
+  border: 2px solid #5c4033;
+  border-radius: 5px;
+  color: #fff;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 3;
+ }
+ 
+ .start-button:hover {
+  background-color: #355e3b;
+  transform: translateX(-50%) translateY(-2px);
+ }
+ 
+ .start-button:active {
+  transform: translateX(-50%) translateY(1px);
+ }
+ 
+ @media (max-width: 600px) {
+  .slideshow-title {
+  font-size: 32px;
+  top: 15%;
+  padding: 8px 16px;
+  z-index: 1000;
+  }
+  .slideshow-subtitle {
+  font-size: 16px;
+  top: 28%;
+  padding: 4px 12px;
+  }
+  .start-button {
+  padding: 12px 24px;
+  font-size: 16px;
+  top: 38%;
+  }
+ }
+ 
+ /* メイン画面 */
+ .main-page-container {
+  position: relative;
+  width: 100%; /* ビューポート内に収める */
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ }
+ 
+ .guide-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  line-height: normal;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+ }
+ 
+ .guide-button:hover {
+  background-color: #45a049;
+  transform: none !important;
+  margin: 0 !important;
+  padding: 10px 20px !important;
+  left: 0 !important;
+  top: 0 !important;
+ }
+ 
+ /* モバイル向け調整 */
+ @media (max-width: 600px) {
+  .main-page-container {
+  padding: 10px;
+  }
+ 
+  .canvas-container {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden; /* キャンバスがはみ出ない */
+  }
+ 
+  .canvas {
+  width: 100% !important;
+  height: auto !important;
+  touch-action: none; /* キャンバス内はタッチ操作を制限 */
+  }
+ 
+  .plant-card {
+  width: 80px;
+  }
+ 
+  .plant-thumbnail {
+  width: 60px;
+  height: 60px;
+  }
+ 
+  .scale-controls {
+  flex-wrap: wrap;
+  gap: 5px;
+  }
+ 
+  .scale-slider {
+  width: 80px;
+  }
+ 
+  .guide-button {
+  font-size: 14px;
+  padding: 8px 16px;
+  }
+ 
+  .save-button {
+  font-size: 14px;
+  padding: 8px 16px;
+  }
+ }
+ 
+ .recommended-ratio {
+  font-size: 12px;
+  color: #5c4033;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  background: rgba(244, 233, 216, 0.8);
+  border: 1px solid #5c4033;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 5px 0;
+  text-align: left;
+  width: 100%;
+  max-width: 800px;
+ }
+ 
+ @media (max-width: 600px) {
+  .recommended-ratio {
+  font-size: 10px;
+  padding: 4px 8px;
+  }
+ }
+ 
+ .scale-controls {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(244, 233, 216, 0.8);
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #5c4033;
+  z-index: 100;
+ }
+ 
+ .scale-button {
+  padding: 0;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #5c4033;
+  border: 2px solid #5c4033;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+ }
+ 
+ .scale-button:hover {
+  background-color: #355e3b;
+ }
+ 
+ .scale-slider {
+  width: 150px;
+  -webkit-appearance: none;
+  background: #d4a373;
+  border-radius: 5px;
+  height: 10px;
+  outline: none;
+  touch-action: pan-y;
+  border: 1px solid #5c4033;
+ }
+ 
+ .scale-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  background: #5c4033;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border: 2px solid #d4a373;
+ }
+ 
+ .scale-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: #5c4033;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  border: 2px solid #d4a373;
+ }
+ 
+ .scale-value {
+  font-size: 14px;
+  color: #5c4033;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  white-space: nowrap;
+ }
+ 
+ @media (max-width: 600px) {
+  .scale-slider {
+  width: 100px;
+  }
+  .scale-button {
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  }
+  .scale-slider::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  }
+  .scale-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  }
+  .scale-value {
+  font-size: 12px;
+  }
+ }
+ 
+ .file-input {
+  padding: 10px;
+  border: 2px solid #5c4033;
+  border-radius: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+ }
+ 
+ .plant-selection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
+ }
+ 
+ .plant-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid #5c4033;
+  border-radius: 5px;
+  background-color: #f4e9d8;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+ }
+ 
+ .plant-thumbnail {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-bottom: 5px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+ }
+ 
+ .plant-thumbnail.selected {
+  border-color: #355e3b;
+ }
+ 
+ .plant-thumbnail:hover {
+  border-color: #355e3b;
+ }
+ 
+ .plant-name {
+  font-size: 14px;
+  color: #5c4033;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  margin-bottom: 5px;
+  text-align: center;
+ }
+ 
+ .buy-button {
+  padding: 6px 10px;
+  font-size: 12px;
+  background-color: #d4a373;
+  border: 2px solid #5c4033;
+  color: #5c4033;
+  width: 100%;
+  max-width: 100px;
+ }
+ 
+ .buy-button:hover {
+  background-color: #355e3b;
+  color: #fff;
+ }
+ 
+ .save-button {
+  background-color: #355e3b;
+  padding: 12px 24px;
+  font-size: 18px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 200px;
+  border: 2px solid #5c4033;
+  background-image: linear-gradient(
+  rgba(255, 255, 255, 0.1),
+  rgba(0, 0, 0, 0.2)
+  );
+ }
+ 
+ .save-button:hover {
+  background-color: #2e4d33;
+ }
+ 
+ /* ポップアップ */
+ .popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in;
+ }
+ 
+ .popup {
+  background-color: #f4e9d8;
+  border: 3px solid #5c4033;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: slideIn 0.3s ease-in;
+ }
+ 
+ .popup h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 24px;
+  color: #355e3b;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+ }
+ 
+ .popup p {
+  font-size: 16px;
+  color: #5c4033;
+  margin-bottom: 15px;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  text-align: left;
+  padding: 0 15px;
+ }
+ 
+ .popup-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+ }
+ 
+ .popup-prev-button {
+  margin-right: auto;
+ }
+ 
+ .popup-next-button {
+  margin-left: auto;
+ }
+ 
+ .popup-prev-button,
+ .popup-next-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #5c4033;
+  border: 2px solid #5c4033;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s, transform 0.2s;
+ }
+ 
+ .popup-prev-button:hover,
+ .popup-next-button:hover {
+  background-color: #355e3b;
+  transform: translateY(-2px);
+ }
+ 
+ .popup-prev-button:active,
+ .popup-next-button:active {
+  transform: translateY(1px);
+ }
+ 
+ .popup-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #5c4033;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+ }
+ 
+ .popup-checkbox input {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  border: 2px solid #5c4033;
+  border-radius: 3px;
+  background-color: #fff;
+  cursor: pointer;
+ }
+ 
+ .popup-checkbox input:checked {
+  background-color: #355e3b;
+  border-color: #355e3b;
+ }
+ 
+ .popup-close-button {
+  padding: 10px 20px;
+  border: 2px solid #5c4033;
+  border-radius: 5px;
+  background-color: #355e3b;
+  background-image: linear-gradient(
+  rgba(255, 255, 255, 0.1),
+  rgba(0, 0, 0, 0.2)
+  );
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+ }
+ 
+ .popup-close-button:hover {
+  background-color: #2e4d33;
+  transform: translateY(-2px);
+ }
+ 
+ .popup-close-button:active {
+  transform: translateY(1px);
+ }
+ 
+ /* 戻るボタン */
+ .back-button {
+  padding: 12px 24px;
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 200px;
+ }
+ 
+ /* ポップアップ再表示ボタン */
+ .reset-popup-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 200px;
+ }
+ 
+ /* 使い方ページ */
+ ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 20px;
+  text-align: left;
+  max-width: 600px;
+ }
+ 
+ ul li {
+  font-size: 16px;
+  color: #5c4033;
+  margin-bottom: 10px;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+ }
+ 
+ ul li strong {
+  color: #355e3b;
+ }
+ 
+ /* ギャラリーページ */
+ .gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 800 px;
+  margin-bottom: 20px;
+ }
+ 
+ .gallery-card {
+  background-color: #f4e9d8;
+  border: 2px solid #5c4033;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+ }
+ 
+ .gallery-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+ }
+ 
+ .gallery-username {
+  font-size: 14px;
+  color: #5c4033;
+  margin: 0 0 10px;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+ }
+ 
+ .gallery-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+ }
+ 
+ .like-button {
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #5c4033;
+  border: 2px solid #5c4033;
+  color: #fff;
+  text-align: left;
+ }
+ 
+ .like-button:hover {
+  background-color: #355e3b;
+ }
+ 
+ .comment-section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+ }
+ 
+ .gallery-comment {
+  font-size: 12px;
+  color: #5c4033;
+  margin: 0;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+ }
+ 
+ .comment-input {
+  padding: 8px;
+  border: 2px solid #5c4033;
+  border-radius: 5px;
+  font-size: 12px;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  width: 100%;
+  box-sizing: border-box;
+ }
+ 
+ /* 商品ページ */
+ .product-image {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border: 3px solid #5c4033;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+ }
+ 
+ .product-price {
+  font-size: 24px;
+  color: #355e3b;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+ }
+ 
+ .product-description {
+  font-size: 16px;
+  color: #5c4033;
+  margin-bottom: 20px;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  text-align: left;
+  max-width: 600px;
+ }
+ 
+ .add-to-cart-button {
+  padding: 12px 24px;
+  font-size: 18px;
+  width: 100%;
+  max-width: 200px;
+  background-color: #355e3b;
+  background-image: linear-gradient(
+  rgba(255, 255, 255, 0.1),
+  rgba(0, 0, 0, 0.2)
+  );
+  border: 2px solid #5c4033;
+ }
+ 
+ .add-to-cart-button:hover {
+  background-color: #2e4d33;
+ }
+ 
+ /* 商品一覧ページ */
+ .products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
+ }
+ 
+ .product-card {
+  background-color: #f4e9d8;
+  border: 2px solid #5c4033;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ }
+ 
+ .product-card-image {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+ }
+ 
+ .product-card-name {
+  font-size: 14px;
+  color: #5c4033;
+  margin: 0 0 5px;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  text-align: center;
+ }
+ 
+ .product-card-price {
+  font-size: 14px;
+  color: #355e3b;
+  font-weight: 700;
+  margin: 0 0 10px;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+ }
+ 
+ /* クレジット */
+ .credit {
+  font-size: 12px;
+  color: #5c4033;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f4e9d8;
+  border-top: 1px solid #5c4033;
+  text-align: center;
+  font-family: 'Noto Serif JP', 'Lora', serif;
+  width: 100%;
+ }
+ 
+ /* アニメーション */
+ @keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+ }
+ 
+ @keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+ }.logo-image {
+  width: 80%;         /* 横幅に合わせて縮小（必要に応じて調整） */
+  max-width: 400px;   /* 最大横幅を制限 */
+  height: auto;       /* 縦横比を維持 */
+  display: block;
+  margin: 0 auto 20px auto; /* 中央寄せ＆下に余白 */
+}
+
