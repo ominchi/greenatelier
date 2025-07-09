@@ -1,0 +1,20 @@
+{
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "serviceworker": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "rules": {
+      "no-restricted-globals": [
+        "error",
+        {
+          "name": "self",
+          "message": "Use of 'self' is restricted, except in service workers."
+        }
+      ]
+    }
+  }

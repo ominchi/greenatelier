@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/greenatelier/static/css/main.74f422a8.css",
+    "main.js": "/greenatelier/static/js/main.547537d6.js",
+    "service-worker.js": "/greenatelier/service-worker.js",
+    "index.html": "/greenatelier/index.html",
+    "main.74f422a8.css.map": "/greenatelier/static/css/main.74f422a8.css.map",
+    "main.547537d6.js.map": "/greenatelier/static/js/main.547537d6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.74f422a8.css",
+    "static/js/main.547537d6.js"
+  ]
+}
